@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "925467821451",
+    "project_id": "aseeralkotob-1a600",
+    "storage_bucket": "aseeralkotob-1a600.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925467821451:android:30a962b12ced955cd65b8e",
+        "android_client_info": {
+          "package_name": "com.mahmoudyasser.bookjuice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925467821451-dsnlpih3rllstvs3j34d8e88af666o7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mahmoudyasser.bookjuice",
+            "certificate_hash": "71795103bd5713cf3239af8c834a34b88d9e7ae4"
+          }
+        },
+        {
+          "client_id": "925467821451-f5bm9doqclian1mh0hss8otckkcvmb17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVGPLV9FsWBE8n6INeRT7MwXF_Fbpi0t4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925467821451-f5bm9doqclian1mh0hss8otckkcvmb17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
