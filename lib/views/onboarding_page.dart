@@ -1,91 +1,107 @@
-import 'package:bookjuice/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bookjuice/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:bookjuice/views/pages.dart';
+import 'package:material_dialogs/material_dialogs.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: IntroductionScreen(
-          pages: [
-            PageViewModel(
-              title: 'Answer the survey easily',
-              body:
-                  'You can diagnose by answering the survey and the result will appear immediately.',
-              image: buildImage('assets/images/survey.png'),
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Upload child image easily',
-              body:
-                  'You can diagnose by uploading child image and the result will appear immediately',
-              image: buildImage('assets/images/Upload1.png'),
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Choose the suitable activity',
-              body:
-                  'We will tell you child shortcomings in which category and recommend any activity to choose',
-              image: buildImage('assets/images/gaming.png'),
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Your child will learn a lot',
-              body:
-                  'We will learn your child a lot of daily activites like reading clock ',
-              image: buildImage('assets/images/Clock.png'),
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Take a lot of advice',
-              body:
-                  'You will learn more about Autism and how to deal with autistic child',
-              footer: ElevatedButton(
-                  onPressed: () => goToHome(context),
-                  child: const Text("أبدا في  استخدام التطبيق")),
-              image: buildImage('assets/images/communication.png'),
-              decoration: getPageDecoration(),
-            ),
-          ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: SafeArea(
+        child: Scaffold(
+          body: IntroductionScreen(
+            pages: [
+              PageViewModel(
+                title: ' تصفح العديد من المؤلفات ',
+                body:
+                    'يحتوي التطبيق على العديد من المؤلفات كما يتم تقسيمهم الى عدة اقسام تبعا لتصنيفهم',
+                image: Lottie.asset(
+                  'assets/book1.json',
+                  fit: BoxFit.contain,
+                ),
+                decoration: getPageDecoration(context),
+              ),
+              PageViewModel(
+                title: 'قراءة الكتب مباشرة من خلال التطبيق',
+                body:
+                    'يمكنك تصفح الكتب والروايات وقرأتها مباشرة دون الحاجة الى تحميلها في جهازك',
+                image:Lottie.asset(
+                  'assets/book3.json',
+                  fit: BoxFit.contain,
+                ),
+                decoration: getPageDecoration(context),
+              ),
+              PageViewModel(
+                title: 'تحميل الكتب بكل سهولة',
+                body: 'يمكنك تحميل الكتاب الذي تريده بصيغة PDF',
+                image: Lottie.asset(
+                  'assets/book2.json',
+                  fit: BoxFit.contain,
+                ),
+                decoration: getPageDecoration(context),
+              ),
+              PageViewModel(
+                title: 'حدد الكتب المفضلة',
+                body:
+                    'يمكنك اختيار الكتب المفضلة لديك لوضعهم في قائمة المفضلة لتطمن سهولة الوصول لها',
+                footer: InkWell(
+                  onTap:  () => goToHome(context),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width/2,
+                    height: 50,
+                decoration: BoxDecoration(color:  Theme.of(context).primaryColor,borderRadius: BorderRadius.circular(15)),
+                    child: const Center(child: Text("ابدأ في  استخدام التطبيق",style: TextStyle(color: Colors.white),)),
+                  ),
+                ),
+                image: Lottie.asset(
+                  'assets/book4.json',
+                  fit: BoxFit.contain,
+                ),
+                decoration: getPageDecoration(context),
+              ),
+            ],
 
-          done: const SizedBox(),
-          onDone: () => goToHome(context),
-          showNextButton: true,
+            done: const SizedBox(),
+            onDone: () => goToHome(context),
+            showNextButton: true,
 
-          showSkipButton: true,
-          skip: const Text(
-            'Skip',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
+            showSkipButton: true,
+            skip: const Text(
+              'تخطي',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.grey),
+            ),
+            onSkip: () => goToHome(context),
+            next: Text(
+              'التالي',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Theme.of(context).primaryColor),
+            ),
+            dotsDecorator: getDotDecoration(),
+            onChange: (index) => debugPrint('Page $index selected'),
+            rtl: true,
+
+            nextFlex: 0,
+            // isProgressTap: false,
+            // isProgress: false,
+            // showNextButton: false,
+            // freeze: true,
+            // animationDuration: 1000,
           ),
-          onSkip: () => goToHome(context),
-          next: const Text(
-            'Next',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.grey),
-          ),
-          dotsDecorator: getDotDecoration(),
-          onChange: (index) => debugPrint('Page $index selected'),
-          globalBackgroundColor: Theme.of(context).primaryColor,
-
-          nextFlex: 0,
-          // isProgressTap: false,
-          // isProgress: false,
-          // showNextButton: false,
-          // freeze: true,
-          // animationDuration: 1000,
         ),
       ),
     );
   }
 
   void goToHome(context) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Pages()),
+        MaterialPageRoute(builder: (_) => const Login()),
       );
 
   Widget buildImage(String path) =>
@@ -101,15 +117,15 @@ class OnBoardingPage extends StatelessWidget {
         ),
       );
 
-  PageDecoration getPageDecoration() => const PageDecoration(
+  PageDecoration getPageDecoration(BuildContext context) => PageDecoration(
         titleTextStyle: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.bold,
-          color: Color.fromARGB(255, 39, 143, 221),
+          color: Theme.of(context).primaryColor,
         ),
-        bodyTextStyle:
-            TextStyle(fontSize: 20, color: Color.fromARGB(255, 122, 122, 122)),
-        imagePadding: EdgeInsets.all(24),
+        bodyTextStyle: const TextStyle(
+            fontSize: 20, color: Color.fromARGB(255, 122, 122, 122)),
+        imagePadding: const EdgeInsets.all(24),
         pageColor: Colors.white,
       );
 }
