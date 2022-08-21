@@ -1,19 +1,29 @@
-import 'package:bookjuice/screens/Reader_screan.dart';
-import 'package:bookjuice/screens/bookdetails.dart';
-import 'package:bookjuice/screens/categories.dart';
-
-import 'package:bookjuice/screens/pages.dart';
 import 'package:bookjuice/utilities/routes.dart';
+import 'package:bookjuice/views/landing_page.dart';
+import 'package:bookjuice/views/onboarding_page.dart';
 import 'package:flutter/material.dart';
-
-import '../screens/category.dart';
+import '../views/Reader_screan.dart';
+import '../views/bookdetails.dart';
+import '../views/categories.dart';
+import '../views/category.dart';
+import '../views/login.dart';
+import '../views/pages.dart';
+import '../views/register.dart';
 
 Route<dynamic> onGenerate(RouteSettings settings) {
   switch (settings.name) {
+    case AppRoutes.landing:
+      return MaterialPageRoute(builder: ((context) => const LandingPage()));
+      case AppRoutes.onboarding:
+      return MaterialPageRoute(builder: ((context) => const OnBoardingPage()));
+    case AppRoutes.login:
+      return MaterialPageRoute(builder: ((context) => const Login()));
+    case AppRoutes.register:
+      return MaterialPageRoute(builder: ((context) => const SignUp()));
     case AppRoutes.home:
-      return MaterialPageRoute(builder: ((context) => Pages()));
+      return MaterialPageRoute(builder: ((context) => const Pages()));
     case AppRoutes.categories:
-      return MaterialPageRoute(builder: ((context) => Categories()));
+      return MaterialPageRoute(builder: ((context) => const Categories()));
     case AppRoutes.category:
       final args = settings.arguments as Map<String, dynamic>;
       final id = args["id"];
@@ -32,10 +42,10 @@ Route<dynamic> onGenerate(RouteSettings settings) {
                 bookId: id,
               )));
     case AppRoutes.readscreen:
-     final args = settings.arguments as Map<String, dynamic>;
+      final args = settings.arguments as Map<String, dynamic>;
       final url = args["url"];
       return MaterialPageRoute(builder: ((context) => ReaderScreen(url)));
     default:
-      return MaterialPageRoute(builder: ((context) => Pages()));
+      return MaterialPageRoute(builder: ((context) => const Pages()));
   }
 }

@@ -1,7 +1,10 @@
-import 'package:bookjuice/screens/categories.dart';
-import 'package:bookjuice/screens/home.dart';
+
+import 'package:bookjuice/views/categories.dart';
+import 'package:bookjuice/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+
+
 
 
 
@@ -18,7 +21,7 @@ class _PagesState extends State<Pages> {
 
  List<Widget> _buildScreens() {
         return [
-            Home(),
+            const Home(),
          const Categories()
         ];
     }
