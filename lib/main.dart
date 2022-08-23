@@ -4,7 +4,6 @@ import 'package:bookjuice/utilities/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'widgets/textform.dart';
 
 void main() async {
@@ -41,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerate,
-        initialRoute: AppRoutes.landing,
+        initialRoute: AppRoutes.home,
       ),
     );
   }

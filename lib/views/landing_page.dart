@@ -1,6 +1,5 @@
-import 'package:bookjuice/views/login.dart';
+import 'package:bookjuice/views/home_screen.dart';
 import 'package:bookjuice/views/onboarding_page.dart';
-import 'package:bookjuice/views/pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return const OnBoardingPage();
           }
-          return const Pages();
+          return const HomePage();
         }
       
         return  Scaffold(

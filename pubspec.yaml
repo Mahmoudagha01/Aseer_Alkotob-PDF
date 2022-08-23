@@ -47,6 +47,8 @@ dependencies:
   open_file: ^3.2.1
   material_dialogs: ^1.1.3
   introduction_screen: ^3.0.2
+  share_plus: ^4.0.10+1
+  url_launcher: ^6.0.9
   
 
 

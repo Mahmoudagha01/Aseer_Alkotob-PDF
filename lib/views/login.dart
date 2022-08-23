@@ -1,3 +1,4 @@
+
 import 'package:bookjuice/controllers/auth_controller.dart';
 import 'package:bookjuice/services/auth.dart';
 import 'package:bookjuice/utilities/routes.dart';
@@ -30,15 +31,23 @@ class _LoginState extends State<Login> {
       Navigator.pushNamed(context, AppRoutes.home);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
-        MainDialog(context: context, title: 'خطأ', content: "البريد الالكتروني الذي تم ادخاله غير صحيح")
-          .showAlertDialog();
+        MainDialog(
+                context: context,
+                title: 'خطأ',
+                content: "البريد الالكتروني الذي تم ادخاله غير صحيح")
+            .showAlertDialog();
       }
       if (e.code == 'user-not-found') {
-        MainDialog(context: context, title: 'خطأ', content: "البريد الالكتروني الذي تم ادخاله غير مسجل لدينا يمكنك انشاء حساب جديد")
-          .showAlertDialog();
+        MainDialog(
+                context: context,
+                title: 'خطأ',
+                content:
+                    "البريد الالكتروني الذي تم ادخاله غير مسجل لدينا يمكنك انشاء حساب جديد")
+            .showAlertDialog();
       } else if (e.code == 'wrong-password') {
-        MainDialog(context: context, title: 'خطأ', content: "كلمة السر غير صحيحة")
-          .showAlertDialog();
+        MainDialog(
+                context: context, title: 'خطأ', content: "كلمة السر غير صحيحة")
+            .showAlertDialog();
       }
     } catch (e) {
       print(e);
@@ -227,7 +236,13 @@ class _LoginState extends State<Login> {
                         ),
                       )
                     ],
-                  )
+                  ),
+                  const Text("أو"),
+                  InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.home);
+                      },
+                      child:  Text("تخطي عملية تسجيل الدخول الان",style: TextStyle(color: Theme.of(context).primaryColor),),)
                 ],
               ),
             ),

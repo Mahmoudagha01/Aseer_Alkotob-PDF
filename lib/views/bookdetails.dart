@@ -6,6 +6,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:material_dialogs/material_dialogs.dart';
 import 'package:material_dialogs/widgets/buttons/icon_button.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'Reader_screan.dart';
 
 class BookDetails extends StatefulWidget {
@@ -16,6 +17,26 @@ class BookDetails extends StatefulWidget {
 }
 
 class _BookDetailsState extends State<BookDetails> {
+ 
+  void toggleFavorite(String bookid) {
+    final existingIndex =
+        File.favoriteBooks.indexWhere((element) => element.id == bookid);
+    if (existingIndex >= 0) {
+      setState(() {
+        File.favoriteBooks.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        File.favoriteBooks
+            .add(File.filesList.firstWhere((element) => element.id == bookid));
+      });
+    }
+  }
+
+  bool isFavorite(String id) {
+    return File.favoriteBooks.any((element) => element.id == id);
+  }
+
   bool downloading = false;
 
   String progress = '0';
@@ -49,7 +70,7 @@ class _BookDetailsState extends State<BookDetails> {
     ).then((_) {
       Dialogs.materialDialog(
           color: Colors.white,
-         msgAlign: TextAlign.right,
+          msgAlign: TextAlign.right,
           msg: 'تم تنزيل الملف! يمكنك رؤية ملفك في ملفات المحملة',
           title: 'تم تحميل الكتاب بنجاح',
           lottieBuilder: Lottie.asset(
@@ -104,17 +125,24 @@ class _BookDetailsState extends State<BookDetails> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("${selectedBook.title}"),
+          title: Text(
+            "${selectedBook.title}",
+          ),
           actions: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-              child: Image.asset("assets/images/logo.png"),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 3,
+              ),
+              child: Image.asset(
+                "assets/images/logo.png",
+              ),
             )
           ],
         ),
         body: downloading
             ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Center(
                     child: SizedBox(
@@ -132,7 +160,9 @@ class _BookDetailsState extends State<BookDetails> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     "جاري تحميل الكتاب: $progress %",
                     style: const TextStyle(
@@ -143,241 +173,310 @@ class _BookDetailsState extends State<BookDetails> {
               )
             : SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(255, 231, 191, 1)),
-                      ),
-                      Positioned(
-                        bottom: 8,
-                        left: MediaQuery.of(context).size.width * 0.3,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.33,
-                          decoration: BoxDecoration(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(
+                              255,
+                              231,
+                              191,
+                              1,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          left: MediaQuery.of(context).size.width * 0.3,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.33,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(
+                                18,
+                              ),
                               image: DecorationImage(
                                   image: NetworkImage(
                                     "${selectedBook.img}",
                                   ),
-                                  fit: BoxFit.fill)),
+                                  fit: BoxFit.fill),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          top: 10,
+                          child: Column(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Share.share(
+                                    'حمل كتاب : ${selectedBook.title} للكاتب : ${selectedBook.author} \n  من خلال الرابط الاتي \n${selectedBook.url}',
+                                    subject: "عصير الكتب - PDF",
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.ios_share,
+                                  size: 28,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  toggleFavorite(
+                                    "${selectedBook.id}",
+                                  );
+                                },
+                                icon: isFavorite("${selectedBook.id}")
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 30,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite_border,
+                                        size: 30,
+                                      ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                     Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ReaderScreen(selectedBook),),);
+                                  },
+                                  icon: Icon(Icons.remove_red_eye_outlined,size: 30,color: Theme.of(context).primaryColor,)),
+                              IconButton(
+                                  onPressed: () async {
+                                    downloadFile("${selectedBook.url}",
+                                        "${selectedBook.title}");
+                                  },
+                                  icon: Icon(
+                                    Icons.download_for_offline_outlined,
+                                    size: 30,
+                                    color: Theme.of(context).primaryColor,
+                                  ))
+                            ],
+                          ),
+                        )
+                      ]),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.description_outlined,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Text(
+                              "وصف الكتاب",
+                              style: TextStyle(height: 3),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Text(
+                          "${selectedBook.description}",
+                          style: const TextStyle(color: Colors.black54),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.dashboard_outlined,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Text(
+                              "معلومات اخرى",
+                              style: TextStyle(height: 3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'المؤلف:  ',
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextSpan(
+                                text: '${selectedBook.author}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'عدد الصفحات:  ',
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextSpan(
+                                text: '${selectedBook.pageNum}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'حجم الملف:  ',
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextSpan(
+                                text: '${selectedBook.size}',
+                              ),
+                              const TextSpan(
+                                text: ' ميجا بايت',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'سنة النشر:  ',
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextSpan(
+                                text: '${selectedBook.date}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 3),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                text: 'دار النشر:  ',
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                              TextSpan(
+                                text: '${selectedBook.dar}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                // Navigator.pushNamed(context, AppRoutes.readscreen,arguments: {"url":selectedBook.url});
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ReaderScreen(selectedBook),
+                                  ),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.read_more,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              label: FittedBox(
+                                child: Text(
+                                  "قراءة ",
+                                  style: TextStyle(
+                                      fontFamily: "Shamel",
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 17),
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  side: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 1,
+                                  ),
+                                  primary: Colors.white,
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width / 2.5,
+                                      60),
+                                  textStyle: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            const SizedBox(
+                              width: 25,
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () async {
+                                downloadFile("${selectedBook.url}",
+                                    "${selectedBook.title}");
+                                // openBook(
+                                //     uri: "${selectedBook.url}",
+                                //     fileName: "${selectedBook.title}");
+                              },
+                              icon: Icon(
+                                Icons.download,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              label: FittedBox(
+                                child: Text(
+                                  "تحميل ",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Theme.of(context).primaryColor,
+                                      fontFamily: "Shamel"),
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 1),
+                                  primary: Colors.white,
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width / 2.5,
+                                      60),
+                                  textStyle: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ],
                         ),
                       ),
                     ]),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.description_outlined,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text(
-                            "وصف الكتاب",
-                            style: TextStyle(height: 3),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Text(
-                        "${selectedBook.description}",
-                        style: const TextStyle(color: Colors.black54),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.dashboard_outlined,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text(
-                            "معلومات اخرى",
-                            style: TextStyle(height: 3),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'المؤلف:  ',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            TextSpan(
-                              text: '${selectedBook.author}',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 3),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'عدد الصفحات:  ',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            TextSpan(
-                              text: '${selectedBook.pageNum}',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 3),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'حجم الملف:  ',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            TextSpan(
-                              text: '${selectedBook.size}',
-                            ),
-                            const TextSpan(
-                              text: ' ميجا بايت',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 3),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'سنة النشر:  ',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            TextSpan(
-                              text: '${selectedBook.date}',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 3),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'دار النشر:  ',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                            TextSpan(
-                              text: '${selectedBook.dar}',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              // Navigator.pushNamed(context, AppRoutes.readscreen,arguments: {"url":selectedBook.url});
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ReaderScreen(selectedBook)));
-                            },
-                            icon: Icon(
-                              Icons.read_more,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            label: FittedBox(
-                              child: Text(
-                                "قراءة ",
-                                style: TextStyle(
-                                    fontFamily: "Shamel",
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 17),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                                side: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 1,
-                                ),
-                                primary: Colors.white,
-                                fixedSize: Size(
-                                    MediaQuery.of(context).size.width / 2.5,
-                                    60),
-                                textStyle: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold)),
-                          ),
-                          const SizedBox(
-                            width: 25,
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () async {
-                              downloadFile("${selectedBook.url}",
-                                  "${selectedBook.title}");
-                              // openBook(
-                              //     uri: "${selectedBook.url}",
-                              //     fileName: "${selectedBook.title}");
-                            },
-                            icon: Icon(
-                              Icons.download,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            label: FittedBox(
-                              child: Text(
-                                "تحميل ",
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    color: Theme.of(context).primaryColor,
-                                    fontFamily: "Shamel"),
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                                side: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                    width: 1),
-                                primary: Colors.white,
-                                fixedSize: Size(
-                                    MediaQuery.of(context).size.width / 2.5,
-                                    60),
-                                textStyle: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
       ),
     );

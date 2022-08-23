@@ -70,7 +70,7 @@ class BookItem extends StatelessWidget {
                 ),
               ),
               FittedBox(
-                child: Text("$author}"),
+                child: Text(author),
               ),
             ],
           ),

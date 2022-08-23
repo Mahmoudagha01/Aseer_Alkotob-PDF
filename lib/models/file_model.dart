@@ -23,7 +23,7 @@ class File {
       this.description,
       this.img,
       this.size});
-
+ static List<File> favoriteBooks = [];
   static List<File> filesList = [
     File(
         title: "أرض زيكولا",
