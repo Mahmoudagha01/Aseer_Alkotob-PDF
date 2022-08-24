@@ -1,3 +1,4 @@
+
 import 'package:bookjuice/services/auth.dart';
 import 'package:bookjuice/utilities/router.dart';
 import 'package:bookjuice/utilities/routes.dart';
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<TFF>(
           create: (_) => TFF(),
         ),
-       
+      
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: onGenerate,
-        initialRoute: AppRoutes.home,
+        initialRoute: AppRoutes.landing,
       ),
     );
   }

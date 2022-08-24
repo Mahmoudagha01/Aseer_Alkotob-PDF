@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:bookjuice/models/category_model.dart';
 import 'package:bookjuice/views/bookdetails.dart';
@@ -192,7 +191,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: ListView.builder(
                 itemCount: categoryBooks.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,

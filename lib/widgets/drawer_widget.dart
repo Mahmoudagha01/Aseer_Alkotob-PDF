@@ -137,7 +137,7 @@ class DrawerWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
                       onTap: () {
-                        auth.logOut();
+                        auth.logOut().then((value) => Navigator.pushReplacementNamed(context, AppRoutes.login));
                       },
                       child: Row(
                         children: const [

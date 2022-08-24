@@ -1,9 +1,11 @@
 import 'package:bookjuice/controllers/auth_controller.dart';
 import 'package:bookjuice/widgets/textform.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../utilities/routes.dart';
 import '../widgets/main_dialog.dart';
 
 class SignUp extends StatefulWidget {
@@ -30,9 +32,31 @@ class _SignUpState extends State<SignUp> {
   FocusNode f4 = FocusNode();
   Future<void> _signup(AuthController value) async {
     try {
-      await value.submitRegister();
+    await value.auth.registerWithEmailAndPassword(value.email, value.password);
       if (!mounted) return;
-    } catch (e) {
+      Navigator.pushNamed(context, AppRoutes.home);
+    }on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        MainDialog(
+                context: context,
+                title: 'خطأ',
+                content: "البريد الالكتروني الذي تم ادخاله غير صحيح")
+            .showAlertDialog();
+      }
+      if (e.code == 'user-not-found') {
+        MainDialog(
+                context: context,
+                title: 'خطأ',
+                content:
+                    "البريد الالكتروني الذي تم ادخاله غير مسجل لدينا يمكنك انشاء حساب جديد")
+            .showAlertDialog();
+     
+      }else if (e.code == 'weak-password') {
+        MainDialog(
+                context: context, title: 'خطأ', content: "كلمة السر غير قوية يجب ان تحتوي على 6 احرف على الاقل")
+            .showAlertDialog();
+      }
+    }  catch (e) {
       MainDialog(context: context, title: 'Error', content: e.toString())
           .showAlertDialog();
     }

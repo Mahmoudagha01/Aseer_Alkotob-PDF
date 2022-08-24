@@ -8,6 +8,8 @@ class Favorite extends StatelessWidget {
   const Favorite({Key? key}) : super(key: key);
 
   @override
+  
+
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -30,7 +32,7 @@ class Favorite extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       "لم يتم اضافة كتب الى قائمة المفضلة حتى الان\n ابدأ باضافة البعض",
                       textAlign: TextAlign.center,
