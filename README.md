@@ -9,7 +9,7 @@ A new Flutter project.
 ![new-design0 (5)](https://user-images.githubusercontent.com/55716560/186752748-1cfc1064-edac-4e67-bb30-e3fc76c05df2.jpeg)
 ![new-design0 (6)](https://user-images.githubusercontent.com/55716560/186754069-5df5a0c0-31eb-40f7-ac1a-579788ee2803.jpeg)
 ## Video!
-https://drive.google.com/uc?id=1tBbRGrY5HbnZYlME6Yl8CaSHPRKoqwNz&export=download
+https://drive.google.com/file/d/1tBbRGrY5HbnZYlME6Yl8CaSHPRKoqwNz/view?usp=sharing
 
 
 
