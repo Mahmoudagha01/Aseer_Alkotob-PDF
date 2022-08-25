@@ -1,4 +1,3 @@
-
 import 'package:bookjuice/services/auth.dart';
 import 'package:bookjuice/utilities/router.dart';
 import 'package:bookjuice/utilities/routes.dart';
@@ -25,18 +24,29 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-         Provider<AuthBase>(create: (context) => Auth(),),
+        Provider<AuthBase>(
+          create: (context) => Auth(),
+        ),
         ChangeNotifierProvider<TFF>(
           create: (_) => TFF(),
         ),
-      
       ],
       child: MaterialApp(
         theme: ThemeData(
           fontFamily: "Shamel",
-          primaryColor: const Color.fromRGBO(105, 10, 22, 1),
+          primaryColor: const Color.fromRGBO(
+            105,
+            10,
+            22,
+            1,
+          ),
           appBarTheme: const AppBarTheme(
-            color: Color.fromRGBO(105, 10, 22, 1),
+            color: Color.fromRGBO(
+              105,
+              10,
+              22,
+              1,
+            ),
           ),
         ),
         debugShowCheckedModeBanner: false,

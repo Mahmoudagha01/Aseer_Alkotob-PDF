@@ -2,7 +2,6 @@ import 'package:bookjuice/utilities/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../services/auth.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -51,8 +50,16 @@ class DrawerWidget extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        color: Theme.of(context).primaryColor,
         padding: const EdgeInsets.only(top: 50, bottom: 70, left: 10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          image: const DecorationImage(
+            image: AssetImage(
+              "assets/images/Mask2@3x.png",
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,7 +118,8 @@ class DrawerWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, AppRoutes.login);
+                          Navigator.pushReplacementNamed(
+                              context, AppRoutes.login);
                         },
                         child: Row(
                           children: const [
@@ -137,7 +145,9 @@ class DrawerWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
                       onTap: () {
-                        auth.logOut().then((value) => Navigator.pushReplacementNamed(context, AppRoutes.login));
+                        auth.logOut().then((value) =>
+                            Navigator.pushReplacementNamed(
+                                context, AppRoutes.login));
                       },
                       child: Row(
                         children: const [

@@ -1,4 +1,5 @@
-import 'package:bookjuice/views/login.dart';
+
+import 'package:bookjuice/views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:material_dialogs/material_dialogs.dart';
@@ -101,7 +102,7 @@ class OnBoardingPage extends StatelessWidget {
   }
 
   void goToHome(context) => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Login()),
+        MaterialPageRoute(builder: (_) => const SplashScreen()),
       );
 
   Widget buildImage(String path) =>

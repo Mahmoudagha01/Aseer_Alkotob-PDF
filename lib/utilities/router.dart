@@ -6,6 +6,7 @@ import 'package:bookjuice/views/favorites.dart';
 import 'package:bookjuice/views/home_screen.dart';
 import 'package:bookjuice/views/landing_page.dart';
 import 'package:bookjuice/views/onboarding_page.dart';
+import 'package:bookjuice/views/search.dart';
 import 'package:flutter/material.dart';
 import '../views/Reader_screan.dart';
 import '../views/bookdetails.dart';
@@ -25,6 +26,8 @@ Route<dynamic> onGenerate(RouteSettings settings) {
       return MaterialPageRoute(builder: ((context) => const SignUp()));
     case AppRoutes.home:
       return MaterialPageRoute(builder: ((context) => const HomePage()));
+      case AppRoutes.search:
+      return MaterialPageRoute(builder: ((context) => const Search()));
     case AppRoutes.bookDetails:
       final args = settings.arguments as Map<String, dynamic>;
       final id = args["id"];
