@@ -3,25 +3,13 @@
 A new Flutter project.
 
 ## Screenshots!
-onboarding1: (https://user-images.githubusercontent.com/55716560/186289380-ff9af64a-bf4d-4009-acea-f0cc1e5a7aff.jpg)
-
-onboarding2: https://user-images.githubusercontent.com/55716560/186290290-f111c4c1-bc6d-412c-9b36-ac0a996e62dc.jpg 
-
-login: https://user-images.githubusercontent.com/55716560/186289392-ba3d9eea-a187-4a07-8470-69c8bbc9b235.jpg
-
-home : https://user-images.githubusercontent.com/55716560/186289532-06bfa618-e8b7-4658-b17c-2f930fa5ced4.jpg
-
-bookdetails1: https://user-images.githubusercontent.com/55716560/186289586-3c470be4-2568-4b6e-9512-ff77d142e8cf.jpg
-
-bookdetails2: https://user-images.githubusercontent.com/55716560/186289595-4a3fdff7-cfe9-47ed-b32f-e1df5faabc1e.jpg
-
-readingpage: https://user-images.githubusercontent.com/55716560/186289829-6610da55-f8ea-4de2-b9d1-7123a3836ebe.jpg
-
-download: https://user-images.githubusercontent.com/55716560/186289845-da4a9807-fd03-4fc8-b511-8d0e4a83c3b9.jpg
-
-drawer: https://user-images.githubusercontent.com/55716560/186289858-ae333dec-e37e-48e8-acfe-7cca3178a14d.jpg
-
-favorite page: https://user-images.githubusercontent.com/55716560/186289870-40fdbf0f-f3eb-435c-9af6-02e5a1d78fb4.jpg)
-
+![new-design0](https://user-images.githubusercontent.com/55716560/186749030-9b4d3d5e-bc1a-43e4-9484-e3dc5affd2b2.jpeg)
+![new-design0 (1)](https://user-images.githubusercontent.com/55716560/186750114-c0412fa8-9e5a-4595-a837-ec575a52e7b1.jpeg)
+          ![new-design0 (4)](https://user-images.githubusercontent.com/55716560/186751511-6790fdb9-b692-4fda-95f4-09876d43dc99.jpeg)
+![new-design0 (5)](https://user-images.githubusercontent.com/55716560/186752748-1cfc1064-edac-4e67-bb30-e3fc76c05df2.jpeg)
+![new-design0 (6)](https://user-images.githubusercontent.com/55716560/186754069-5df5a0c0-31eb-40f7-ac1a-579788ee2803.jpeg)
 ## Video!
-https://drive.google.com/file/d/1iynHjlj2GKxmvjI0YhY_J-uVqe0mtvy0/view?usp=sharing
+https://drive.google.com/uc?id=1tBbRGrY5HbnZYlME6Yl8CaSHPRKoqwNz&export=download
+
+
+
